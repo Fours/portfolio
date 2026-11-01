@@ -32,7 +32,9 @@ function NodeText({ node, cx, cy }: { node: ArchNode; cx: number; cy: number }) 
 
 function Node({ node }: { node: ArchNode }) {
   const { x, y, w, h } = node
-  const cls = node.accent ? 'arch-node is-accent' : 'arch-node'
+  const cls = ['arch-node', node.accent && 'is-accent', node.tone && `is-${node.tone}`]
+    .filter(Boolean)
+    .join(' ')
 
   if (node.kind === 'store') {
     const rx = w / 2
@@ -90,7 +92,7 @@ export default function Systems() {
             The shape of what I build
           </SectionHeading>
           <p className="section-lede">
-            Commerce, online learning and digital licensing platforms, end to end: client to data
+            Commerce, online learning, digital licensing, and more - end to end: client to data
             store, joined by events.
           </p>
         </div>
@@ -149,9 +151,9 @@ export default function Systems() {
 
             {archEdges.map((e, i) => {
               const marker = `url(#arch-arrow-${e.kind})`
-              const flowing = e.kind === 'event' && !e.twoWay
+              // Dashes flow in point order (first point to last), two-way edges included.
               return (
-                <g key={i} className={`arch-edge is-${e.kind}${flowing ? ' is-flowing' : ''}`}>
+                <g key={i} className={`arch-edge is-${e.kind}${e.kind === 'event' ? ' is-flowing' : ''}`}>
                   <polyline
                     points={e.points.map((p) => p.join(',')).join(' ')}
                     markerEnd={marker}
@@ -182,7 +184,7 @@ export default function Systems() {
             </span>
             <span className="arch-key">
               <span className="arch-key-context" aria-hidden="true" />
-              bounded context, owns its data
+              bounded context
             </span>
           </figcaption>
         </figure>

@@ -20,7 +20,7 @@ export const highlights = [
 
 // Systems diagram: a made-up commerce + learning platform drawn in SVG user
 // units (viewBox below). Coordinates are hand-placed; nudge them together.
-export const archViewBox = { w: 1210, h: 506 }
+export const archViewBox = { w: 1210, h: 560 }
 
 export type ArchNode = {
   id: string
@@ -32,6 +32,8 @@ export type ArchNode = {
   w: number
   h: number
   accent?: boolean
+  // Outline color by role; see the .arch-node.is-* rules in index.css.
+  tone?: 'gateway' | 'service' | 'store'
   // Draws stacked copies behind the box to suggest a clustered service.
   cluster?: boolean
 }
@@ -49,43 +51,46 @@ export type ArchEdge = {
 export type ArchRegion = { kind: 'cluster' | 'context'; x: number; y: number; w: number; h: number; label?: ArchLabel }
 
 export const archRegions: ArchRegion[] = [
-  
-  { kind: 'context', x: 548, y: 26, w: 204, h: 240 },
-  { kind: 'context', x: 768, y: 26, w: 204, h: 240 },
-  { kind: 'context', x: 988, y: 26, w: 204, h: 240 },
+  { kind: 'context', x: 548, y: 194, w: 204, h: 242 },
+  { kind: 'context', x: 768, y: 194, w: 204, h: 242 },
+  { kind: 'context', x: 988, y: 194, w: 204, h: 242 },
 ]
 
 export const archLabels: ArchLabel[] = [
-  { text: 'CLIENTS', x: 110, y: 150, anchor: 'middle' },
-  { text: 'EDGE', x: 365, y: 150, anchor: 'middle' },
+  { text: 'CLIENTS', x: 110, y: 40, anchor: 'middle' },
+  { text: 'EDGE', x: 365, y: 40, anchor: 'middle' },
 ]
 
 export const archNodes: ArchNode[] = [
-  { id: 'storefront', kind: 'box', title: 'Storefront', sub: 'React · TypeScript', x: 20, y: 170, w: 180, h: 80 },
-  { id: 'admin', kind: 'box', title: 'Admin console', sub: 'React · live dashboards', x: 20, y: 400, w: 180, h: 80 },
-  { id: 'api', kind: 'box', title: 'API gateway', sub: 'Auth · Rate-Limiting', x: 270, y: 170, w: 190, h: 80 },
-  { id: 'sse', kind: 'box', title: 'SSE gateway', sub: 'Node · EventSource', x: 270, y: 400, w: 190, h: 80 },
-  { id: 'orders', kind: 'box', title: 'Orders service', sub: 'Java · Spring', x: 560, y: 170, w: 180, h: 80, cluster: true },
-  { id: 'licensing', kind: 'box', title: 'Licensing service', sub: 'Scala · Akka cluster', x: 780, y: 170, w: 180, h: 80, cluster: true },
-  { id: 'learning', kind: 'box', title: 'Learning service', sub: 'Node · Express', x: 1000, y: 170, w: 180, h: 80, cluster: true },
-  { id: 'postgres', kind: 'store', title: 'Postgres', sub: 'SQL', x: 580, y: 40, w: 140, h: 70 },
-  { id: 'dynamo', kind: 'store', title: 'DynamoDB', sub: 'key-value', x: 800, y: 40, w: 140, h: 70 },
-  { id: 'mongo', kind: 'store', title: 'MongoDB', sub: 'documents', x: 1020, y: 40, w: 140, h: 70 },
-  { id: 'kafka', kind: 'bus', title: 'Kafka event bus', sub: 'streamed, event-driven collaboration', x: 560, y: 410, w: 620, h: 60, accent: true },
+  { id: 'storefront', kind: 'box', title: 'Storefront', sub: 'React · TypeScript', x: 20, y: 60, w: 180, h: 80 },
+  { id: 'admin', kind: 'box', title: 'Admin console', sub: 'React · live dashboards', x: 20, y: 470, w: 180, h: 80 },
+  { id: 'api', kind: 'box', title: 'API gateway', sub: 'Auth · Rate-Limiting', x: 270, y: 60, w: 190, h: 80, tone: 'gateway' },
+  { id: 'sse', kind: 'box', title: 'SSE gateway', sub: 'Node · EventSource', x: 270, y: 470, w: 190, h: 80, tone: 'gateway' },
+  { id: 'orders', kind: 'box', title: 'Orders service', sub: 'Java · Spring', x: 560, y: 220, w: 180, h: 80, cluster: true, tone: 'service' },
+  { id: 'licensing', kind: 'box', title: 'Licensing service', sub: 'Scala · Akka cluster', x: 780, y: 220, w: 180, h: 80, cluster: true, tone: 'service' },
+  { id: 'learning', kind: 'box', title: 'Learning service', sub: 'Node · Express', x: 1000, y: 220, w: 180, h: 80, cluster: true, tone: 'service' },
+  { id: 'postgres', kind: 'store', title: 'Postgres', sub: 'SQL', x: 610, y: 350, w: 130, h: 70, tone: 'store' },
+  { id: 'dynamo', kind: 'store', title: 'DynamoDB', sub: 'key-value', x: 830, y: 350, w: 130, h: 70, tone: 'store' },
+  { id: 'mongo', kind: 'store', title: 'MongoDB', sub: 'documents', x: 1050, y: 350, w: 130, h: 70, tone: 'store' },
+  { id: 'kafka', kind: 'bus', title: 'Kafka event bus', sub: 'streamed, event-driven collaboration', x: 560, y: 480, w: 620, h: 60, accent: true },
 ]
 
+// API routes are nested elbows (farthest service on the highest track) so they
+// never cross. They stop at y 208, the top of each service's cluster stack.
 export const archEdges: ArchEdge[] = [
-  { kind: 'request', twoWay: true, points: [[200, 210], [270, 210]], label: { text: 'REST', x: 235, y: 201, anchor: 'middle' } },
-  { kind: 'request', twoWay: true, points: [[460, 210], [560, 210]], label: { text: '', x: 495, y: 201, anchor: 'middle' } },
-  { kind: 'request', points: [[650, 170], [650, 110]] },
-  { kind: 'request', points: [[870, 170], [870, 110]] },
-  { kind: 'request', points: [[1090, 170], [1090, 110]] },
-  { kind: 'event', twoWay: true, points: [[650, 250], [650, 410]], label: { text: 'orderPlaced', x: 640, y: 334, anchor: 'end' } },
-  { kind: 'event', twoWay: true, points: [[870, 250], [870, 410]], label: { text: 'licenseGranted', x: 860, y: 334, anchor: 'end' } },
-  { kind: 'event', twoWay: true, points: [[1090, 250], [1090, 410]], label: { text: 'courseEnrolled', x: 1080, y: 334, anchor: 'end' } },
-  { kind: 'event', points: [[560, 440], [460, 440]], label: { text: 'consume', x: 495, y: 431, anchor: 'middle' } },
-  { kind: 'event', points: [[270, 440], [200, 440]], label: { text: 'SSE', x: 235, y: 431, anchor: 'middle' } },
-  { kind: 'event', points: [[320, 400], [320, 320], [110, 320], [110, 250]], label: { text: 'SSE', x: 215, y: 311, anchor: 'middle' } },
+  { kind: 'request', twoWay: true, points: [[200, 100], [270, 100]], label: { text: 'REST', x: 235, y: 91, anchor: 'middle' } },
+  { kind: 'request', twoWay: true, points: [[460, 80], [1090, 80], [1090, 208]] },
+  { kind: 'request', twoWay: true, points: [[460, 100], [870, 100], [870, 208]] },
+  { kind: 'request', twoWay: true, points: [[460, 120], [650, 120], [650, 208]] },
+  { kind: 'request', twoWay: true, points: [[675, 300], [675, 350]] },
+  { kind: 'request', twoWay: true, points: [[895, 300], [895, 350]] },
+  { kind: 'request', twoWay: true, points: [[1115, 300], [1115, 350]] },
+  { kind: 'event', twoWay: true, points: [[585, 300], [585, 480]], label: { text: 'orderPlaced', x: 595, y: 460 } },
+  { kind: 'event', twoWay: true, points: [[805, 300], [805, 480]], label: { text: 'licenseGranted', x: 815, y: 460 } },
+  { kind: 'event', twoWay: true, points: [[1025, 300], [1025, 480]], label: { text: 'courseEnrolled', x: 1035, y: 460 } },
+  { kind: 'event', points: [[560, 510], [460, 510]], label: { text: 'consume', x: 510, y: 501, anchor: 'middle' } },
+  { kind: 'event', points: [[270, 510], [200, 510]], label: { text: 'SSE', x: 235, y: 501, anchor: 'middle' } },
+  { kind: 'event', points: [[320, 470], [320, 200], [110, 200], [110, 140]], label: { text: 'SSE', x: 215, y: 191, anchor: 'middle' } },
 ]
 
 export type Job = {

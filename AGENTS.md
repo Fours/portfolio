@@ -28,7 +28,16 @@ There is no linter or test suite. `npm run build` is the gate — it fails on ty
 - **Design tokens** are CSS custom properties on `:root` at the top of `index.css` (`--accent`, `--bg`, `--text`, `--line-*`, fonts, etc.). The site is dark-mode only (`color-scheme: dark`). Reuse existing tokens rather than hardcoding colors.
 - A section component typically renders `<section id="..." className="section container">` and uses `<SectionHeading>` for its title. Follow the existing sections as the template.
 - Section `id`s are anchor targets for the nav — if you rename one, update `navLinks` in `resume.ts` to match.
-- TypeScript is strict. Type new data shapes in `resume.ts` (see the `SystemLayer` / `SystemNode` pattern).
+- TypeScript is strict. Type new data shapes in `resume.ts` (see the `ArchNode` / `ArchEdge` pattern).
+
+## Systems diagram
+
+The Systems section is a hand-built inline SVG of a fictional event-driven platform, rendered by `Systems.tsx` from the `arch*` exports in `resume.ts`.
+
+- **Coordinates are hand-placed** in viewBox units (`archViewBox`), not auto-laid-out. Moving a node means moving its connected edges and labels too, and growing the layout means bumping `archViewBox`. The SVG scales to 100% width; there is no separate mobile layout.
+- **Edges** are polylines through `points`. `kind: 'request'` draws a solid line, `kind: 'event'` a dashed, animated one; `twoWay` adds an arrowhead at the start. Event dashes flow from the first point to the last, so the point order sets the animation direction.
+- **The API gateway's routes are nested elbows** (the farthest service uses the highest track) so they don't cross. Keep that ordering if you add a service. They stop 12px above each service, at the top of its `cluster` card stack, so the arrowheads stay visible.
+- **Outline color** comes from a node's `tone` (`gateway` yellow, `service` orange, `store` purple) via the `.arch-node.is-*` rules and the `--yellow` / `--orange` / `--purple` tokens.
 
 ## Notes
 

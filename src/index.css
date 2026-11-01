@@ -2,7 +2,10 @@
 :root {
   --accent: #4ade80;
   --accent-ink: #07120c;
-  --ring: conic-gradient(var(--accent), #60a5fa, #a78bfa, #f472b6, #fb923c, var(--accent));
+  --yellow: #facc15;
+  --orange: #fb923c;
+  --purple: #a78bfa;
+  --ring: conic-gradient(var(--accent), #60a5fa, var(--purple), #f472b6, var(--orange), var(--accent));
 
   --bg: #0b1220;
   --surface: #0d1527;
@@ -439,9 +442,17 @@ p {
 .arch-node.is-accent .arch-shape {
   stroke: var(--accent);
 }
+.arch-node.is-gateway { --tone: var(--yellow); }
+.arch-node.is-service { --tone: var(--orange); }
+.arch-node.is-store { --tone: var(--purple); }
+.arch-node[class*='is-'] .arch-shape {
+  stroke: var(--tone, var(--accent));
+}
+.arch-node[class*='is-'] .arch-shadow {
+  stroke: color-mix(in srgb, var(--tone, var(--accent)) 40%, var(--bg));
+}
 .arch-bus .arch-shape {
   fill: rgba(74, 222, 128, 0.06);
-  stroke-dasharray: 6 5;
 }
 .arch-shadow {
   fill: var(--surface-2);
