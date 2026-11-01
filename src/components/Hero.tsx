@@ -1,5 +1,6 @@
 import { email } from '../data/resume'
 import { ArrowDownIcon, MailIcon } from './Icons'
+import SocialLinks from './SocialLinks'
 
 export default function Hero() {
   return (
@@ -17,6 +18,7 @@ export default function Hero() {
             <MailIcon />
             Get in touch
           </a>
+          <SocialLinks />
           <a href="#experience" className="btn btn-ghost">
             View experience
             <ArrowDownIcon />

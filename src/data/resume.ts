@@ -2,6 +2,14 @@
 
 export const email = 'kylewillett@gmail.com'
 
+export type Social = { kind: 'x' | 'github' | 'youtube'; label: string; href: string }
+
+export const socials: Social[] = [
+  { kind: 'x', label: 'X (Twitter)', href: 'https://x.com/kylewillett' },
+  { kind: 'github', label: 'GitHub', href: 'https://github.com/Fours' },
+  { kind: 'youtube', label: 'YouTube', href: 'https://www.youtube.com/@kylewillett_' },
+]
+
 export const navLinks = [
   { href: '#about', label: 'About' },
   { href: '#systems', label: 'Systems' },

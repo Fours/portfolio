@@ -201,7 +201,7 @@ p {
 .logo-text {
   display: inline-block;
   padding: 0 3px;
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);   
   font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -263,6 +263,28 @@ p {
   flex-wrap: wrap;
   gap: 14px;
   padding-top: 8px;
+}
+.socials {
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.social {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--line-3);
+  border-radius: 10px;
+  color: var(--text-muted);
+  transition: border-color 0.15s, color 0.15s, transform 0.15s;
+}
+.social:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-2px);
 }
 .hero-figure {
   flex: 1 1 280px;
