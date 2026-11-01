@@ -127,7 +127,7 @@ export const jobs: Job[] = [
       'Delivered incremental value with Scrum, versioning, code review, CI/CD, unit and end-to-end testing, and monitoring/analytics.',
       'Designed UX for B2B and B2C commerce, digital curriculum, internal dashboards and admin tools.',
     ],
-    tags: ['Scala', 'Akka', 'Java · Spring', 'React', 'Node.js', 'Kafka', 'AWS'],
+    //tags: ['Scala', 'Akka', 'Java · Spring', 'React', 'Node.js', 'Kafka', 'AWS'],
   },
   {
     dates: '2007 — 2009',
