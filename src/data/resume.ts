@@ -18,43 +18,74 @@ export const highlights = [
   { value: '1999', label: 'designing and building for the web since the last century' },
 ]
 
-export type SystemNode = { title: string; sub: string }
-export type SystemLayer = { name: string; nodes: SystemNode[] }
+// Systems diagram: a made-up commerce + learning platform drawn in SVG user
+// units (viewBox below). Coordinates are hand-placed; nudge them together.
+export const archViewBox = { w: 1210, h: 506 }
 
-// The first node in each layer gets the accent outline.
-export const systemLayers: SystemLayer[] = [
-  {
-    name: 'Client',
-    nodes: [
-      { title: 'React apps', sub: 'earlier AngularJS' },
-      { title: 'EventSource', sub: 'async, message-driven UI' },
-      { title: 'UX design', sub: 'B2B · B2C · admin tools' },
-    ],
-  },
-  {
-    name: 'API',
-    nodes: [
-      { title: 'REST services', sub: 'Node · Express' },
-      { title: 'AWS Lambda', sub: 'serverless endpoints' },
-      { title: 'Play Framework', sub: 'Scala web services' },
-    ],
-  },
-  {
-    name: 'Services',
-    nodes: [
-      { title: 'Scala + Akka', sub: 'clustered actor systems' },
-      { title: 'Java + Spring', sub: 'B2B commerce · $80M/yr' },
-      { title: 'Bounded contexts', sub: 'domain-driven design' },
-    ],
-  },
-  {
-    name: 'Data',
-    nodes: [
-      { title: 'Postgres', sub: 'relational · SQL' },
-      { title: 'MongoDB', sub: 'document store' },
-      { title: 'DynamoDB', sub: 'key-value at scale' },
-    ],
-  },
+export type ArchNode = {
+  id: string
+  kind: 'box' | 'store' | 'bus'
+  title: string
+  sub: string
+  x: number
+  y: number
+  w: number
+  h: number
+  accent?: boolean
+  // Draws stacked copies behind the box to suggest a clustered service.
+  cluster?: boolean
+}
+
+export type ArchLabel = { text: string; x: number; y: number; anchor?: 'start' | 'middle' | 'end' }
+
+export type ArchEdge = {
+  kind: 'request' | 'event'
+  points: [number, number][]
+  // Arrowheads on both ends (publish + subscribe).
+  twoWay?: boolean
+  label?: ArchLabel
+}
+
+export type ArchRegion = { kind: 'cluster' | 'context'; x: number; y: number; w: number; h: number; label?: ArchLabel }
+
+export const archRegions: ArchRegion[] = [
+  
+  { kind: 'context', x: 548, y: 26, w: 204, h: 240 },
+  { kind: 'context', x: 768, y: 26, w: 204, h: 240 },
+  { kind: 'context', x: 988, y: 26, w: 204, h: 240 },
+]
+
+export const archLabels: ArchLabel[] = [
+  { text: 'CLIENTS', x: 110, y: 150, anchor: 'middle' },
+  { text: 'EDGE', x: 365, y: 150, anchor: 'middle' },
+]
+
+export const archNodes: ArchNode[] = [
+  { id: 'storefront', kind: 'box', title: 'Storefront', sub: 'React · TypeScript', x: 20, y: 170, w: 180, h: 80 },
+  { id: 'admin', kind: 'box', title: 'Admin console', sub: 'React · live dashboards', x: 20, y: 400, w: 180, h: 80 },
+  { id: 'api', kind: 'box', title: 'API gateway', sub: 'Auth · Rate-Limiting', x: 270, y: 170, w: 190, h: 80 },
+  { id: 'sse', kind: 'box', title: 'SSE gateway', sub: 'Node · EventSource', x: 270, y: 400, w: 190, h: 80 },
+  { id: 'orders', kind: 'box', title: 'Orders service', sub: 'Java · Spring', x: 560, y: 170, w: 180, h: 80, cluster: true },
+  { id: 'licensing', kind: 'box', title: 'Licensing service', sub: 'Scala · Akka cluster', x: 780, y: 170, w: 180, h: 80, cluster: true },
+  { id: 'learning', kind: 'box', title: 'Learning service', sub: 'Node · Express', x: 1000, y: 170, w: 180, h: 80, cluster: true },
+  { id: 'postgres', kind: 'store', title: 'Postgres', sub: 'SQL', x: 580, y: 40, w: 140, h: 70 },
+  { id: 'dynamo', kind: 'store', title: 'DynamoDB', sub: 'key-value', x: 800, y: 40, w: 140, h: 70 },
+  { id: 'mongo', kind: 'store', title: 'MongoDB', sub: 'documents', x: 1020, y: 40, w: 140, h: 70 },
+  { id: 'kafka', kind: 'bus', title: 'Kafka event bus', sub: 'streamed, event-driven collaboration', x: 560, y: 410, w: 620, h: 60, accent: true },
+]
+
+export const archEdges: ArchEdge[] = [
+  { kind: 'request', twoWay: true, points: [[200, 210], [270, 210]], label: { text: 'REST', x: 235, y: 201, anchor: 'middle' } },
+  { kind: 'request', twoWay: true, points: [[460, 210], [560, 210]], label: { text: '', x: 495, y: 201, anchor: 'middle' } },
+  { kind: 'request', points: [[650, 170], [650, 110]] },
+  { kind: 'request', points: [[870, 170], [870, 110]] },
+  { kind: 'request', points: [[1090, 170], [1090, 110]] },
+  { kind: 'event', twoWay: true, points: [[650, 250], [650, 410]], label: { text: 'orderPlaced', x: 640, y: 334, anchor: 'end' } },
+  { kind: 'event', twoWay: true, points: [[870, 250], [870, 410]], label: { text: 'licenseGranted', x: 860, y: 334, anchor: 'end' } },
+  { kind: 'event', twoWay: true, points: [[1090, 250], [1090, 410]], label: { text: 'courseEnrolled', x: 1080, y: 334, anchor: 'end' } },
+  { kind: 'event', points: [[560, 440], [460, 440]], label: { text: 'consume', x: 495, y: 431, anchor: 'middle' } },
+  { kind: 'event', points: [[270, 440], [200, 440]], label: { text: 'SSE', x: 235, y: 431, anchor: 'middle' } },
+  { kind: 'event', points: [[320, 400], [320, 320], [110, 320], [110, 250]], label: { text: 'SSE', x: 215, y: 311, anchor: 'middle' } },
 ]
 
 export type Job = {

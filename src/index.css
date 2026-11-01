@@ -415,77 +415,136 @@ p {
 }
 
 /* ---------- Systems ---------- */
-.layers {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+.arch {
+  margin: 0;
+  padding: 28px;
+  border: 1px solid var(--line-2);
+  background: var(--bg);
 }
-.layer {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+.arch-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: var(--font-sans);
 }
-.layer-label {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.arch-shape {
+  fill: var(--surface);
+  stroke: var(--line-3);
+  stroke-width: 1.5;
+  transition: stroke 0.2s;
+}
+.arch-node:hover .arch-shape {
+  stroke: var(--line-hover);
+}
+.arch-node.is-accent .arch-shape {
+  stroke: var(--accent);
+}
+.arch-bus .arch-shape {
+  fill: rgba(74, 222, 128, 0.06);
+  stroke-dasharray: 6 5;
+}
+.arch-shadow {
+  fill: var(--surface-2);
+  stroke: var(--line-2);
+  stroke-width: 1.5;
+}
+.arch-pulse {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.arch-title {
+  font-size: 16px;
+  font-weight: 700;
+  fill: var(--text-strong);
+}
+.arch-sub {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--text-dim);
-  text-transform: uppercase;
+  fill: var(--text-dim);
+}
+.arch-region rect {
+  fill: none;
+  stroke: var(--line-2);
+  stroke-width: 1;
+  stroke-dasharray: 4 4;
+}
+.arch-region.is-cluster rect {
+  fill: rgba(13, 21, 39, 0.6);
+  stroke: var(--line-3);
+  stroke-dasharray: 8 6;
+}
+.arch-region text,
+.arch-col-labels text {
+  font-family: var(--font-mono);
+  font-size: 11px;
   letter-spacing: 0.08em;
+  fill: var(--text-faint);
 }
-.node {
-  border: 1.5px solid var(--line-3);
-  border-radius: 12px;
-  background: var(--bg);
-  transition: border-color 0.2s, transform 0.2s;
+.arch-edge polyline {
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
 }
-.node:hover {
-  border-color: var(--line-hover);
-  transform: translateY(-2px);
+.arch-edge.is-request polyline {
+  stroke: var(--line-hover);
 }
-.layer .node {
-  padding: 16px 18px;
-  text-align: center;
+.arch-edge.is-event polyline {
+  stroke: var(--accent);
+  stroke-dasharray: 6 5;
 }
-.node-accent {
-  border-color: var(--accent);
+.arch-edge.is-flowing polyline {
+  animation: arch-flow 1.2s linear infinite;
 }
-.node-title {
-  font-weight: 700;
-  font-size: 16px;
-  color: var(--text-strong);
+.arch-edge text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  fill: var(--text-muted);
 }
-.node-sub {
-  font-size: 13px;
-  color: var(--text-dim);
+.arch-head-request {
+  fill: var(--line-hover);
 }
-.event-bus {
-  border-style: dashed;
-  border-color: var(--accent);
-  padding: 18px 22px;
+.arch-head-event {
+  fill: var(--accent);
+}
+@keyframes arch-flow {
+  to { stroke-dashoffset: -22; }
+}
+.arch-legend {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px 24px;
-}
-.event-bus-name {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  font-weight: 700;
-  font-size: 16px;
-  color: var(--text-strong);
-}
-.event-bus-name svg {
-  color: var(--accent);
-}
-.event-bus-desc {
+  gap: 10px 28px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
   font-family: var(--font-mono);
   font-size: 13px;
   color: var(--text-dim);
+}
+.arch-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.arch-key-request,
+.arch-key-event {
+  fill: none;
+  stroke-width: 1.5;
+}
+.arch-key-request {
+  stroke: var(--line-hover);
+}
+.arch-key-event {
+  stroke: var(--accent);
+  stroke-dasharray: 6 5;
+}
+.arch-key-context {
+  width: 28px;
+  height: 14px;
+  border: 1px dashed var(--line-hover);
+  border-radius: 4px;
 }
 
 /* ---------- Experience ---------- */
@@ -741,6 +800,7 @@ p {
     animation: none !important;
     transition: none !important;
   }
+  .arch-edge.is-flowing polyline { animation: none; }
 }
 
 /* ---------- Phone menu ---------- */
@@ -816,7 +876,8 @@ p {
     background: rgba(11, 18, 32, 0.96);
   }
 
-  .hide-sm { display: none; }
+  .arch { padding: 0; border: 0; background: none; }
+  .arch-legend { margin-top: 12px; padding-top: 12px; font-size: 12px; }
   .section { padding-top: 72px; padding-bottom: 72px; }
   .contact-wrap { padding-top: 24px; }
 }

@@ -28,14 +28,6 @@ export function ArrowDownIcon({ size = 16 }: IconProps) {
   )
 }
 
-export function PulseIcon({ size = 22 }: IconProps) {
-  return (
-    <svg {...base} width={size} height={size} viewBox="0 0 24 24" strokeWidth={2}>
-      <path d="M3 12h4l3-8 4 16 3-8h4" />
-    </svg>
-  )
-}
-
 export function CapIcon({ size = 22 }: IconProps) {
   return (
     <svg {...base} width={size} height={size} viewBox="0 0 24 24" strokeWidth={1.8}>
@@ -50,15 +42,6 @@ export function BadgeIcon({ size = 22 }: IconProps) {
     <svg {...base} width={size} height={size} viewBox="0 0 24 24" strokeWidth={1.8}>
       <circle cx="12" cy="9" r="6" />
       <path d="m8.5 14-1.5 8 5-3 5 3-1.5-8" />
-    </svg>
-  )
-}
-
-export function FlowArrow() {
-  return (
-    <svg className="hide-sm" aria-hidden="true" width="40" height="12" viewBox="0 0 40 12" fill="none" stroke="#3a4a6b" strokeWidth={1.5}>
-      <path d="M0 6h36" />
-      <path d="m31 1 5 5-5 5" />
     </svg>
   )
 }
