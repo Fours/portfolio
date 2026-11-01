@@ -707,6 +707,9 @@ p {
   gap: 8px;
 }
 .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   font-size: 14px;
   color: var(--text-soft);
   border: 1px solid var(--line-2);
@@ -717,6 +720,14 @@ p {
 .chip:hover {
   border-color: var(--line-hover);
   color: var(--text);
+}
+.chip svg {
+  flex-shrink: 0;
+  color: var(--text-dim);
+  transition: color 0.15s;
+}
+.chip:hover svg {
+  color: var(--accent);
 }
 
 /* ---------- Education ---------- */

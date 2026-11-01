@@ -1,5 +1,6 @@
 import { skillGroups } from '../data/resume'
 import SectionHeading from './SectionHeading'
+import { TechIcon } from './Icons'
 
 export default function Skills() {
   return (
@@ -16,7 +17,10 @@ export default function Skills() {
               <h3 className="skill-card-title">{group.name}</h3>
               <div className="chips">
                 {group.skills.map((s) => (
-                  <span key={s} className="chip">{s}</span>
+                  <span key={s.label} className="chip">
+                    {s.icon && <TechIcon name={s.icon} />}
+                    {s.label}
+                  </span>
                 ))}
               </div>
             </div>

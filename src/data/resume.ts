@@ -1,5 +1,7 @@
 // Content for the page, kept apart from layout so it's easy to edit.
 
+import type { TechIconName } from '../components/Icons'
+
 export const email = 'kylewillett@gmail.com'
 
 export type Social = { kind: 'x' | 'github' | 'youtube'; label: string; href: string }
@@ -150,16 +152,57 @@ export const jobs: Job[] = [
   },
 ]
 
-export type SkillGroup = { name: string; skills: string[]; featured?: boolean }
+// icon is a TechIcon name (see Icons.tsx); omit it when no logo fits.
+export type Skill = { label: string; icon?: TechIconName }
+export type SkillGroup = { name: string; skills: Skill[]; featured?: boolean }
 
 export const skillGroups: SkillGroup[] = [
-  { name: 'Languages', skills: ['Scala', 'Java', 'TypeScript', 'JavaScript', 'SQL', 'HTML/CSS'] },
-  { name: 'Frameworks & runtime', skills: ['React', 'Node.js', 'Akka', 'Kafka'] },
-  { name: 'Data', skills: ['Postgres', 'MongoDB', 'DynamoDB', 'NoSQL'] },
+  {
+    name: 'Languages',
+    skills: [
+      { label: 'Scala', icon: 'scala' },
+      { label: 'Java', icon: 'openjdk' },
+      { label: 'TypeScript', icon: 'typescript' },
+      { label: 'JavaScript', icon: 'javascript' },
+      { label: 'SQL' },
+      { label: 'HTML/CSS', icon: 'html5' },
+    ],
+  },
+  {
+    name: 'Frameworks & runtime',
+    skills: [
+      { label: 'React', icon: 'react' },
+      { label: 'Node.js', icon: 'nodedotjs' },
+      { label: 'Akka' },
+      { label: 'Kafka', icon: 'apachekafka' },
+    ],
+  },
+  {
+    name: 'Data',
+    skills: [
+      { label: 'Postgres', icon: 'postgresql' },
+      { label: 'MongoDB', icon: 'mongodb' },
+      { label: 'DynamoDB', icon: 'amazondynamodb' },
+      { label: 'NoSQL' },
+    ],
+  },
   {
     name: 'Cloud & delivery',
-    skills: ['AWS', 'Docker + Kubernetes', 'CI/CD', 'Git/GitHub', 'Unit Testing'],
+    skills: [
+      { label: 'AWS', icon: 'amazonwebservices' },
+      { label: 'Docker + Kubernetes', icon: 'docker' },
+      { label: 'CI/CD' },
+      { label: 'Git/GitHub', icon: 'git' },
+      { label: 'Unit Testing' },
+    ],
   },
-  { name: 'Practice', skills: ['Domain-Driven Design', 'Agile/Scrum', 'UX Design'] },
-  { name: 'AI-assisted', skills: ['LLM-assisted development', 'Claude Code'], featured: true },
+  {
+    name: 'Practice',
+    skills: [{ label: 'Domain-Driven Design' }, { label: 'Agile/Scrum' }, { label: 'UX Design' }],
+  },
+  {
+    name: 'AI-assisted',
+    skills: [{ label: 'LLM-assisted development' }, { label: 'Claude Code', icon: 'claude' }],
+    featured: true,
+  },
 ]
