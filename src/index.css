@@ -788,6 +788,16 @@ p {
   flex-direction: column;
   gap: 12px;
 }
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.contact-actions .social {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+}
 .contact-title {
   margin: 0;
   font-size: clamp(2rem, 4.5vw, 3.25rem);

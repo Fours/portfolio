@@ -1,5 +1,6 @@
 import { email } from '../data/resume'
 import { MailIcon } from './Icons'
+import SocialLinks from './SocialLinks'
 
 export default function Contact() {
   return (
@@ -8,12 +9,14 @@ export default function Contact() {
         <div className="contact-copy">
           <span className="eyebrow">06 / contact</span>
           <h2 className="contact-title">Let's build something.</h2>
-          <p className="section-lede">The fastest way to reach me is email.</p>
         </div>
-        <a href={`mailto:${email}`} className="btn btn-primary btn-lg">
-          <MailIcon size={20} />
-          {email}
-        </a>
+        <div className="contact-actions">
+          <a href={`mailto:${email}`} className="btn btn-primary btn-lg">
+            <MailIcon size={20} />
+            Email
+          </a>
+          <SocialLinks />
+        </div>
       </div>
     </section>
   )
