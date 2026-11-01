@@ -5,7 +5,7 @@ export default function Hero() {
   return (
     <section className="hero container">
       <div className="hero-copy">
-        <p className="hero-kicker">// AI powered software engineer · nashville, tn</p>
+        <p className="hero-kicker">// ai powered software engineer · nashville, tn</p>
         <h1 className="hero-title">Kyle Willett</h1>
         <p className="hero-lede">
           Full-stack, fast-learning software developer with 10+ years of experience designing and
