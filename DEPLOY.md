@@ -16,7 +16,9 @@ The site is a static build (`dist/`) hosted on **S3 behind CloudFront**:
    aws configure
    ```
    The credentials need: `s3:PutObject`, `s3:DeleteObject`, `s3:ListBucket` on the
-   bucket, and `cloudfront:CreateInvalidation` on the distribution.
+   bucket, and `cloudfront:CreateInvalidation` on the distribution. A ready-to-use
+   least-privilege policy is in [`deploy/iam-policy.json`](deploy/iam-policy.json) —
+   see [IAM permissions](#iam-permissions) below.
 
 2. **Provide your CloudFront distribution ID.** Copy the example config and fill it in
    (the real file is gitignored, so the ID never gets committed):
@@ -55,6 +57,34 @@ The script reads these from the environment or `scripts/deploy.config.local`:
 | `DEPLOY_BUCKET` | `kylewillett.com` | Target bucket |
 | `DEPLOY_PREFIX` | `portfolio` | Key prefix within the bucket |
 | `DEPLOY_REGION` | `us-east-1` | Bucket region |
+
+## IAM permissions
+
+Give the deploying identity only what the script needs — don't use your root
+account or an admin/`AmazonS3FullAccess` identity. For a human deploying from a
+laptop, **IAM Identity Center (SSO)** is preferred (short-lived credentials, no
+stored secret key). A dedicated IAM user with access keys also works if you scope
+it tightly and rotate the key periodically.
+
+The least-privilege policy is in [`deploy/iam-policy.json`](deploy/iam-policy.json).
+Before attaching it, replace the placeholders in the CloudFront statement:
+
+- `ACCOUNT_ID` — your 12-digit AWS account ID
+- `DIST_ID` — the CloudFront distribution ID (same one as `CLOUDFRONT_DISTRIBUTION_ID`)
+
+It grants exactly what `scripts/deploy.sh` calls:
+
+- `s3:ListBucket` on `kylewillett.com`, scoped to the `portfolio/*` prefix (so `s3 sync` can diff)
+- `s3:PutObject` / `s3:DeleteObject` under `portfolio/*`
+- `cloudfront:CreateInvalidation` on the one distribution
+
+If `s3 sync` ever reports a permission error, add `s3:GetObject` on
+`arn:aws:s3:::kylewillett.com/portfolio/*` — some sync comparisons use it.
+
+**Tip:** attach it to a named profile rather than your shell default, e.g.
+`aws configure --profile portfolio-deploy`, then deploy with
+`AWS_PROFILE=portfolio-deploy npm run deploy`, so this limited identity isn't your
+default credentials.
 
 ## Notes
 
