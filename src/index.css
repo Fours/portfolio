@@ -267,7 +267,7 @@ p {
   gap: 56px 72px;
 }
 .hero-copy {
-  flex: 999 1 520px;
+  flex: 999 1 475px;
   min-width: 0;
   display: flex;
   flex-direction: column;
