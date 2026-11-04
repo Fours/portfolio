@@ -26,7 +26,7 @@ export default function Hero() {
               Get in touch
             </a>
             <SocialLinks />
-            <a href="#experience" className="btn btn-ghost">
+            <a href="#experience" className="btn btn-ghost hero-view-exp">
               View experience
               <ArrowDownIcon />
             </a>

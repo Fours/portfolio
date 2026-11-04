@@ -434,6 +434,18 @@ p {
   border-radius: 16px;
   overflow: hidden;
 }
+/* Explicit column counts so the four items go 1 -> 2x2 -> 4 across,
+   never 3 + a lone wrapped item. */
+@media (min-width: 490px) {
+  .highlights {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 933px) {
+  .highlights {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
 .highlight {
   background: var(--surface);
   padding: 28px 28px 26px;
@@ -964,6 +976,9 @@ p {
   .nav-open.nav-bar {
     background: rgba(11, 18, 32, 0.96);
   }
+
+  .hero-figure { margin: 0 auto; }
+  .hero-view-exp { display: none; }
 
   .arch { padding: 0; border: 0; background: none; }
   .arch-legend { margin-top: 12px; padding-top: 12px; font-size: 12px; }
