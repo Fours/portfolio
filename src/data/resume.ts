@@ -21,11 +21,40 @@ export const navLinks = [
   { href: '#contact', label: 'Contact' },
 ]
 
-export const highlights = [
-  { value: '$80M', label: 'annual revenue through the B2B commerce app I built' },
-  { value: '1M+', label: 'users served by event-driven services with millions of records' },
-  { value: '14 yrs', label: 'engineering at LifeWay, Designer to Senior Software Engineer' },
-  { value: '1999', label: 'designing and building for the web since the last century' },
+// Each highlight counts up (or down) from `from` to `to` on page load.
+// `format` turns the current number into the displayed string.
+export type Highlight = {
+  from: number
+  to: number
+  format: (n: number) => string
+  label: string
+}
+
+export const highlights: Highlight[] = [
+  {
+    from: 1,
+    to: 80,
+    format: (n) => `$${n}M`,
+    label: 'annual revenue through the B2B commerce app I built',
+  },
+  {
+    from: 1,
+    to: 1000,
+    format: (n) => (n >= 1000 ? '1M+' : `${n}K`),
+    label: 'users served by event-driven services with millions of records',
+  },
+  {
+    from: 0,
+    to: 14,
+    format: (n) => `${n} yrs`,
+    label: 'engineering at LifeWay, Designer to Senior Software Engineer',
+  },
+  {
+    from: new Date().getFullYear(),
+    to: 1999,
+    format: (n) => `${n}`,
+    label: 'designing and building for the web since the last century',
+  },
 ]
 
 // Systems diagram: a made-up commerce + learning platform drawn in SVG user
