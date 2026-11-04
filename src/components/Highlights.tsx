@@ -3,14 +3,23 @@ import { highlights, type Highlight as HighlightData } from '../data/resume'
 
 const DURATION = 3000
 
-// Counts from `from` to `to` over `duration` ms, starting on mount.
+const prefersReducedMotion = () =>
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+// Counts from `from` to `to` over `duration` ms whenever `active` becomes true.
+// Resets to `from` when inactive so the count replays on the next activation.
 // Eased so it decelerates toward the final value. Works in either direction.
-function useCountUp(from: number, to: number, duration = DURATION) {
+function useCountUp(from: number, to: number, active: boolean, duration = DURATION) {
   const [value, setValue] = useState(from)
   const rafRef = useRef<number>()
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (!active) {
+      setValue(from)
+      return
+    }
+
+    if (prefersReducedMotion()) {
       setValue(to)
       return
     }
@@ -28,27 +37,51 @@ function useCountUp(from: number, to: number, duration = DURATION) {
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
     }
-  }, [from, to, duration])
+  }, [from, to, duration, active])
 
   return value
 }
 
-function Highlight({ from, to, format, label }: HighlightData) {
-  const value = useCountUp(from, to)
+function Highlight({ from, to, format, label, active }: HighlightData & { active: boolean }) {
+  const value = useCountUp(from, to, active)
   return (
-    <div className="highlight">
+    <div className={active ? 'highlight is-in' : 'highlight'}>
       <span className="highlight-value">{format(value)}</span>
       <span className="highlight-label">{label}</span>
     </div>
   )
 }
 
+// Tracks whether the element is in the viewport, flipping back to false on exit
+// so the next scroll-in re-triggers the animations.
+function useInView<T extends Element>() {
+  const ref = useRef<T>(null)
+  const [inView, setInView] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.4 },
+    )
+    observer.observe(el)
+
+    return () => observer.disconnect()
+  }, [])
+
+  return [ref, inView] as const
+}
+
 export default function Highlights() {
+  const [ref, inView] = useInView<HTMLDivElement>()
+
   return (
     <section aria-label="Highlights" className="container highlights-wrap">
-      <div className="highlights">
+      <div ref={ref} className="highlights">
         {highlights.map((h) => (
-          <Highlight key={h.label} {...h} />
+          <Highlight key={h.label} {...h} active={inView} />
         ))}
       </div>
     </section>

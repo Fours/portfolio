@@ -458,13 +458,19 @@ p {
   font-weight: 700;
   letter-spacing: -0.03em;
   color: var(--text-strong);
-  /* Drop into place and fade in on load. */
+}
+/* Hidden until the section scrolls into view (motion users only). */
+@media (prefers-reduced-motion: no-preference) {
+  .highlight-value { opacity: 0; }
+}
+/* Drop into place and fade in each time the section enters view. */
+.highlight.is-in .highlight-value {
   animation: highlight-drop 0.7s cubic-bezier(0.34, 1.4, 0.64, 1) both;
 }
 /* Small stagger so the four values land one after another. */
-.highlight:nth-child(2) .highlight-value { animation-delay: 0.09s; }
-.highlight:nth-child(3) .highlight-value { animation-delay: 0.18s; }
-.highlight:nth-child(4) .highlight-value { animation-delay: 0.27s; }
+.highlight.is-in:nth-child(2) .highlight-value { animation-delay: 0.09s; }
+.highlight.is-in:nth-child(3) .highlight-value { animation-delay: 0.18s; }
+.highlight.is-in:nth-child(4) .highlight-value { animation-delay: 0.27s; }
 
 @keyframes highlight-drop {
   from {
