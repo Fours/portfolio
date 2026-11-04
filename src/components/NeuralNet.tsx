@@ -7,7 +7,8 @@ import { useEffect, useRef, type RefObject } from 'react'
 
 type RGB = [number, number, number]
 
-// Matches the site's ring palette (accent green, blue, purple, pink, orange, yellow).
+// The site's ring palette (accent green, blue, purple, pink, orange, yellow)
+// plus white. Yellow is kept rare; most of its share goes to white.
 const PALETTE: RGB[] = [
   [74, 222, 128],
   [96, 165, 250],
@@ -15,7 +16,19 @@ const PALETTE: RGB[] = [
   [244, 114, 182],
   [251, 146, 60],
   [250, 204, 21],
+  [241, 245, 252],
 ]
+const WEIGHTS = [1, 1, 1, 1, 1, 0.25, 0.75]
+const WEIGHT_TOTAL = WEIGHTS.reduce((a, b) => a + b, 0)
+
+function pickColor(rand: () => number): RGB {
+  let r = rand() * WEIGHT_TOTAL
+  for (let i = 0; i < PALETTE.length; i++) {
+    r -= WEIGHTS[i]
+    if (r < 0) return PALETTE[i]
+  }
+  return PALETTE[0]
+}
 
 type Node = {
   hx: number
@@ -39,9 +52,6 @@ type Node = {
 type Edge = {
   a: number
   b: number
-  dashed: boolean
-  dash: number
-  speed: number
   alpha: number
 }
 
@@ -83,16 +93,23 @@ function relRect(el: HTMLElement | null, origin: DOMRect): Rect | null {
   }
 }
 
-function buildDensity(w: number, h: number, copy: Rect | null, photo: Rect | null) {
+// `hb` is where the hero ends inside the canvas; below it the canvas keeps
+// going, but only the side margins outside the content column get nodes.
+function buildDensity(w: number, h: number, hb: number, copy: Rect | null, photo: Rect | null) {
   const narrow = w < 760
   // Where the right-hand column is anchored: the photo if it sits beside the
   // copy, otherwise just the right edge of the screen.
   const besideCopy = photo && copy && photo.left > copy.right - 40
   const colLeft = besideCopy ? photo.left - 140 : w * 0.78
-  const colBottom = besideCopy ? photo.bottom + 120 : copy ? copy.top + 40 : h * 0.3
-  const topBand = narrow ? h * 0.14 : h * 0.24
+  const colBottom = besideCopy ? photo.bottom + 120 : copy ? copy.top + 40 : hb * 0.3
+  const topBand = narrow ? hb * 0.14 : hb * 0.24
   // Left fringe reaches about halfway into the margin beside the copy.
   const leftReach = narrow ? 40 : Math.max(110, (copy?.left ?? 0) * 0.55)
+  // Side gutters: the space between the screen edges and the content column.
+  const contentLeft = copy?.left ?? w
+  const contentRight = besideCopy ? photo.right : copy?.right ?? 0
+  const gutter = Math.min(contentLeft, w - contentRight)
+  const hasGutters = !narrow && gutter > 90
 
   return (x: number, y: number) => {
     // Top band, thickening a little toward the right.
@@ -100,7 +117,7 @@ function buildDensity(w: number, h: number, copy: Rect | null, photo: Rect | nul
     // Right column that dips down behind the photo.
     const right = smooth(colLeft - 220, colLeft + 60, x) * (1 - smooth(colBottom - 160, colBottom, y))
     // Thin fringe down the left edge.
-    const left = Math.exp(-x / leftReach) * (1 - smooth(h * 0.45, h * 0.8, y))
+    const left = Math.exp(-x / leftReach) * (1 - smooth(hb * 0.45, hb * 0.8, y))
     // Halo around the photo, so it sits inside the net.
     let halo = 0
     if (photo) {
@@ -117,20 +134,31 @@ function buildDensity(w: number, h: number, copy: Rect | null, photo: Rect | nul
       const inY = smooth(copy.top - pad, copy.top + 20, y) * (1 - smooth(copy.bottom - 20, copy.bottom + pad, y))
       d *= 1 - 0.94 * inX * inY
     }
-    // Fade out at the bottom of the canvas.
-    d *= 1 - smooth(h * 0.82, h, y)
+    // The hero part fades out at the bottom of the hero.
+    d *= 1 - smooth(hb * 0.82, hb, y)
+
+    // Below that, the net carries on down both gutters, thinning toward the
+    // content column and fading out by the bottom of the canvas.
+    if (hasGutters) {
+      const edge = Math.max(
+        1 - smooth(gutter * 0.25, contentLeft - 10, x),
+        smooth(contentRight + 10, w - gutter * 0.25, x),
+      )
+      const down = 1 - smooth(hb, h, y)
+      d = Math.max(d, edge * down * 0.95)
+    }
     return d
   }
 }
 
-function generate(w: number, h: number, copy: Rect | null, photo: Rect | null) {
+function generate(w: number, h: number, hb: number, copy: Rect | null, photo: Rect | null) {
   const rand = mulberry32(Math.round(w) * 7919 + 17)
-  const density = buildDensity(w, h, copy, photo)
+  const density = buildDensity(w, h, hb, copy, photo)
   const minDist = w < 760 ? 32 : 40
-  const maxNodes = Math.min(260, Math.round((w * h) / 4200))
+  const maxNodes = Math.min(380, Math.round((w * h) / 4200))
 
   const nodes: Node[] = []
-  for (let i = 0; i < 9000 && nodes.length < maxNodes; i++) {
+  for (let i = 0; i < 16000 && nodes.length < maxNodes; i++) {
     const x = rand() * w
     const y = rand() * h
     const d = density(x, y)
@@ -148,7 +176,7 @@ function generate(w: number, h: number, copy: Rect | null, photo: Rect | null) {
       x,
       y,
       r: hub ? 4.5 + rand() * 2 : 1.1 + depth * 2.6,
-      color: PALETTE[Math.floor(rand() * PALETTE.length)],
+      color: pickColor(rand),
       alpha: fade * (hub ? 1 : 0.5 + 0.5 * depth),
       depth: hub ? 1 : depth,
       hub,
@@ -184,13 +212,9 @@ function generate(w: number, h: number, copy: Rect | null, photo: Rect | null) {
       const pocket = smooth(0.02, 0.3, mid)
       if (pocket < 0.05) return
       seen.add(key)
-      const dashed = rand() < 0.3
       edges.push({
         a: i,
         b: j,
-        dashed,
-        dash: 3 + Math.floor(rand() * 4),
-        speed: (rand() < 0.5 ? -1 : 1) * (0.006 + rand() * 0.01),
         alpha: pocket * (0.95 - 0.4 * (Math.sqrt(d) / maxLen)) * (0.7 + 0.3 * Math.max(n.depth, m.depth)),
       })
     })
@@ -260,9 +284,13 @@ export default function NeuralNet({ copyRef, photoRef }: Props) {
       h = box.height
       canvas.width = Math.round(w * dpr)
       canvas.height = Math.round(h * dpr)
+      // The canvas runs past the bottom of the hero (see --net-extend).
+      const shell = canvas.parentElement?.getBoundingClientRect()
+      const hb = shell ? Math.min(h, shell.bottom - box.top) : h
       ;({ nodes, edges } = generate(
         w,
         h,
+        hb,
         relRect(copyRef.current, box),
         relRect(photoRef.current, box),
       ))
@@ -293,21 +321,12 @@ export default function NeuralNet({ copyRef, photoRef }: Props) {
         grad.addColorStop(0, rgba(a.color, a.alpha * e.alpha))
         grad.addColorStop(1, rgba(b.color, b.alpha * e.alpha))
         ctx.strokeStyle = grad
-        const near = Math.max(a.depth, b.depth)
-        if (e.dashed) {
-          ctx.lineWidth = 0.8 + 0.6 * near
-          ctx.setLineDash([e.dash, e.dash + 3])
-          ctx.lineDashOffset = t * e.speed
-        } else {
-          ctx.lineWidth = 0.6 + 0.6 * near
-          ctx.setLineDash([])
-        }
+        ctx.lineWidth = 0.6 + 0.6 * Math.max(a.depth, b.depth)
         ctx.beginPath()
         ctx.moveTo(a.x, a.y)
         ctx.lineTo(b.x, b.y)
         ctx.stroke()
       }
-      ctx.setLineDash([])
 
       // Signals travelling along edges.
       if (!reduceMotion && edges.length) {

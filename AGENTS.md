@@ -41,7 +41,7 @@ The Systems section is a hand-built inline SVG of a fictional event-driven platf
 
 ## Hero background
 
-`NeuralNet.tsx` draws the animated node-and-edge backdrop on a `<canvas>` behind the hero (`.hero-shell` / `.neural-net` in `index.css`). Node placement comes from a density field in `buildDensity`: a top band, a right column that dips behind the photo, a left fringe, a halo around the photo, and a quiet pocket behind the copy (measured from refs that `Hero` passes in). Adjust that function to reshape the frame; the palette is `PALETTE` at the top of the file. It rebuilds on resize, pauses offscreen, and renders one static frame under `prefers-reduced-motion`.
+`NeuralNet.tsx` draws the animated node-and-edge backdrop on a `<canvas>` behind the hero (`.hero-shell` / `.neural-net` in `index.css`). Node placement comes from a density field in `buildDensity`: a top band, a right column that dips behind the photo, a left fringe, a halo around the photo, and a quiet pocket behind the copy (measured from refs that `Hero` passes in). Below the hero the canvas keeps going for `--net-extend` (900px, 0 on phones) with nodes only in the side gutters outside the content column; `.site` is an `isolation: isolate` stacking context so that overflow stays behind the following sections. Adjust that function to reshape the frame; the palette is `PALETTE` at the top of the file. It rebuilds on resize, pauses offscreen, and renders one static frame under `prefers-reduced-motion`.
 
 ## Notes
 
