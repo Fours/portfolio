@@ -39,6 +39,10 @@ The Systems section is a hand-built inline SVG of a fictional event-driven platf
 - **The API gateway's routes are nested elbows** (the farthest service uses the highest track) so they don't cross. Keep that ordering if you add a service. They stop 12px above each service, at the top of its `cluster` card stack, so the arrowheads stay visible.
 - **Outline color** comes from a node's `tone` (`gateway` yellow, `service` orange, `store` purple) via the `.arch-node.is-*` rules and the `--yellow` / `--orange` / `--purple` tokens.
 
+## Hero background
+
+`NeuralNet.tsx` draws the animated node-and-edge backdrop on a `<canvas>` behind the hero (`.hero-shell` / `.neural-net` in `index.css`). Node placement comes from a density field in `buildDensity`: a top band, a right column that dips behind the photo, a left fringe, a halo around the photo, and a quiet pocket behind the copy (measured from refs that `Hero` passes in). Adjust that function to reshape the frame; the palette is `PALETTE` at the top of the file. It rebuilds on resize, pauses offscreen, and renders one static frame under `prefers-reduced-motion`.
+
 ## Notes
 
 - `design/` is intentionally gitignored (see `.gitignore`); don't commit it.

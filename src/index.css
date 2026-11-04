@@ -223,6 +223,36 @@ p {
 }
 
 /* ---------- Hero ---------- */
+.hero-shell {
+  position: relative;
+  isolation: isolate;
+}
+.hero-shell::before,
+.neural-net {
+  position: absolute;
+  z-index: -1;
+  top: -69px; /* run up under the translucent nav */
+  left: 0;
+  width: 100%;
+  height: calc(100% + 69px);
+  pointer-events: none;
+}
+/* Faint colour wash behind the net, for depth. */
+.hero-shell::before {
+  content: '';
+  background:
+    radial-gradient(640px 420px at 86% 18%, rgba(167, 139, 250, 0.1), transparent 70%),
+    radial-gradient(520px 360px at 74% 62%, rgba(74, 222, 128, 0.06), transparent 70%),
+    radial-gradient(560px 320px at 6% 0%, rgba(96, 165, 250, 0.08), transparent 70%);
+}
+.neural-net {
+  display: block;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+.neural-net.is-ready {
+  opacity: 1;
+}
 .hero {
   padding-top: 120px;
   padding-bottom: 96px;
