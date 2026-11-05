@@ -28,6 +28,24 @@ export function ArrowDownIcon({ size = 16 }: IconProps) {
   )
 }
 
+export function ArrowUpRightIcon({ size = 16 }: IconProps) {
+  return (
+    <svg {...base} width={size} height={size} viewBox="0 0 24 24" strokeWidth={2}>
+      <path d="M7 17 17 7" />
+      <path d="M7 7h10v10" />
+    </svg>
+  )
+}
+
+export function SparkIcon({ size = 16 }: IconProps) {
+  return (
+    <svg {...base} width={size} height={size} viewBox="0 0 24 24" strokeWidth={2}>
+      <path d="M12 3v4M12 17v4M3 12h4M17 12h4" />
+      <path d="m12 8 1.2 2.8L16 12l-2.8 1.2L12 16l-1.2-2.8L8 12l2.8-1.2Z" />
+    </svg>
+  )
+}
+
 export function CapIcon({ size = 22 }: IconProps) {
   return (
     <svg {...base} width={size} height={size} viewBox="0 0 24 24" strokeWidth={1.8}>

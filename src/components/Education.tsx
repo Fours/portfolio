@@ -5,7 +5,7 @@ export default function Education() {
   return (
     <section id="education" className="section container stack-40">
       <div className="section-intro">
-        <SectionHeading index="05" label="education">
+        <SectionHeading index="06" label="education">
           Education &amp; certification
         </SectionHeading>
       </div>

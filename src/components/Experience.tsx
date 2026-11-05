@@ -5,7 +5,7 @@ export default function Experience() {
   return (
     <section id="experience" className="section container stack-56">
       <div className="section-intro">
-        <SectionHeading index="03" label="experience">
+        <SectionHeading index="04" label="experience">
           Where I've worked
         </SectionHeading>
       </div>

@@ -15,6 +15,7 @@ export const socials: Social[] = [
 export const navLinks = [
   { href: '#about', label: 'About' },
   { href: '#systems', label: 'Systems' },
+  { href: '#projects', label: 'Projects' },
   { href: '#experience', label: 'Experience' },
   { href: '#skills', label: 'Skills' },
   { href: '#education', label: 'Education' },
@@ -130,6 +131,45 @@ export const archEdges: ArchEdge[] = [
   { kind: 'event', points: [[560, 510], [460, 510]], label: { text: 'consume', x: 510, y: 501, anchor: 'middle' } },
   { kind: 'event', points: [[270, 510], [200, 510]], label: { text: 'SSE', x: 235, y: 501, anchor: 'middle' } },
   { kind: 'event', points: [[320, 470], [320, 200], [110, 200], [110, 140]], label: { text: 'SSE', x: 215, y: 191, anchor: 'middle' } },
+]
+
+// Latest projects. Newest first; the grid grows by rows as you add more.
+// Leave `image` off to show a placeholder until a screenshot is ready
+// (put screenshots in public/projects/ and use e.g. '/projects/solar.png').
+export type Project = {
+  title: string
+  tagline: string
+  description: string
+  // How AI fit into the build; shown as a highlighted callout.
+  aiNote: string
+  tech: string[]
+  status?: string
+  image?: string
+  cta: { label: string; href: string }
+}
+
+export const projects: Project[] = [
+  {
+    title: 'Solar System Explorer',
+    tagline: 'An interactive tour of our cosmic neighborhood',
+    description:
+      "A web app for exploring the Sun, planets and their moons, with facts and figures for each, set against an animated heliosphere drawn live on canvas. I've loved astronomy for as long as I can remember, so I built the guide I wanted to browse.",
+    aiNote:
+      'Built AI-first: I set the product direction, designed the experience and reviewed every change while coding agents wrote most of the implementation.',
+    tech: ['React', 'TypeScript', 'Canvas animation'],
+    cta: { label: 'Explore the app', href: '#' },
+  },
+  {
+    title: 'Archery Blitz',
+    tagline: 'A fast, 3D archery game in the browser',
+    description:
+      'Draw, aim and loose arrows across a 3D range rendered with Three.js. The core loop of aim, release, score and go again is tuned to feel good shot after shot. One level is playable today, with more on the way.',
+    aiNote:
+      'Shaped over 100+ prompts: plan-first sessions to scope each feature, then iterative agent loops to tune the physics, camera and game feel until they landed.',
+    tech: ['Three.js', 'WebGL', '3D game loop'],
+    status: 'Level 1 playable',
+    cta: { label: 'Play the game', href: '#' },
+  },
 ]
 
 export type Job = {

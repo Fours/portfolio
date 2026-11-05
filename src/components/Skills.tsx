@@ -7,7 +7,7 @@ export default function Skills() {
     <section id="skills" className="section band">
       <div className="container stack-48">
         <div className="section-intro">
-          <SectionHeading index="04" label="skills">
+          <SectionHeading index="05" label="skills">
             Competencies
           </SectionHeading>
         </div>
