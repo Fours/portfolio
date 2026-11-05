@@ -184,7 +184,7 @@ export const projects: Project[] = [
     cta: { label: 'Explore the app', href: 'https://solar-system.kylewillett.com' },
   },
   {
-    title: 'Software Quizzes',
+    title: 'quiz()',
     tagline: 'Interview prep, one question at a time',
     description:
       'Bite-sized quizzes for practicing senior engineering interview questions across a variety of topics. Each answer is scored instantly with a detailed explanation, code samples are syntax-highlighted, and progress is saved in the browser.',
@@ -192,7 +192,7 @@ export const projects: Project[] = [
       'Used AI as a content engine: I defined the topics, difficulty and format, then had an agent generate the questions and explanations that I study from and review.',
     tech: ['React', 'TypeScript', 'Markdown', 'highlight.js'],
     image: '/projects/software-quizzes.webp',
-    cta: { label: 'App Coming Soon' },
+    cta: { label: 'Site Coming Soon' },
   },
   
 ]

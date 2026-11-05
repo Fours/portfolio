@@ -747,9 +747,13 @@ p {
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 440px), 1fr));
   gap: 28px;
 }
+/* Each card spans six shared rows (media, head, desc, ai, tags, cta) and uses
+   subgrid so those rows line up across every card in the same grid row. */
 .project-card {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-row: span 6;
+  grid-template-rows: subgrid;
+  row-gap: 0;
   border: 1px solid #1f2b45;
   background: var(--surface);
   overflow: hidden;
@@ -824,10 +828,10 @@ p {
   padding: 4px 10px;
 }
 .project-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+  grid-row: span 5;
+  display: grid;
+  grid-template-rows: subgrid;
+  row-gap: 18px;
   padding: 28px;
 }
 .project-head {
@@ -866,9 +870,14 @@ p {
   margin-top: 3px;
   color: var(--accent);
 }
+/* Keep the tag row top-aligned so shorter tag lists don't stretch to fill
+   the shared subgrid row. */
+.project-body .tags {
+  align-self: start;
+}
 .project-cta {
-  align-self: flex-start;
-  margin-top: auto;
+  justify-self: start;
+  align-self: end;
 }
 .project-cta svg {
   transition: transform 0.15s;
