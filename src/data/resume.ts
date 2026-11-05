@@ -153,22 +153,22 @@ export const projects: Project[] = [
     title: 'Solar System Explorer',
     tagline: 'An interactive tour of our cosmic neighborhood',
     description:
-      "A web app for exploring the Sun, planets and their moons, with facts and figures for each, set against an animated heliosphere drawn live on canvas. I've loved astronomy for as long as I can remember, so I built the guide I wanted to browse.",
+      "A web app for exploring the Sun, planets and their moons, with facts and figures for each, set against an animated heliosphere drawn live on canvas. Features real NASA images of planets.",
     aiNote:
       'Built AI-first: I set the product direction, designed the experience and reviewed every change while coding agents wrote most of the implementation.',
     tech: ['React', 'TypeScript', 'Canvas animation'],
-    cta: { label: 'Explore the app', href: '#' },
+    cta: { label: 'Explore the app', href: 'https://solar-system.kylewillett.com' },
   },
   {
     title: 'Archery Blitz',
     tagline: 'A fast, 3D archery game in the browser',
     description:
-      'Draw, aim and loose arrows across a 3D range rendered with Three.js. The core loop of aim, release, score and go again is tuned to feel good shot after shot. One level is playable today, with more on the way.',
+      'Draw, aim and loose arrows across a 3D range rendered with Three.js. The core loop of aim, release, score and go again is tuned to feel good shot after shot. One level is playable today',
     aiNote:
       'Shaped over 100+ prompts: plan-first sessions to scope each feature, then iterative agent loops to tune the physics, camera and game feel until they landed.',
-    tech: ['Three.js', 'WebGL', '3D game loop'],
+    tech: ['Three.js', 'Typescript', 'WebGL', '3D game loop'],
     status: 'Level 1 playable',
-    cta: { label: 'Play the game', href: '#' },
+    cta: { label: 'Play the game', href: 'https://archery-blitz.kylewillett.com' },
   },
 ]
 
