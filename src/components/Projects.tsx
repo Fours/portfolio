@@ -35,7 +35,7 @@ export default function Projects() {
       <div className="project-grid">
         {projects.map((p) => (
           <article key={p.title} className="project-card">
-            <a className="project-media" href={p.cta.href} tabIndex={-1} aria-hidden="true">
+            <a className="project-media" href={p.cta.href} target="_blank" rel="noopener noreferrer" tabIndex={-1} aria-hidden="true">
               <Shot project={p} />
               {p.status && <span className="project-status">{p.status}</span>}
             </a>
@@ -54,7 +54,7 @@ export default function Projects() {
                   <span key={t} className="tag">{t}</span>
                 ))}
               </div>
-              <a className="btn btn-ghost project-cta" href={p.cta.href}>
+              <a className="btn btn-ghost project-cta" href={p.cta.href} target="_blank" rel="noopener noreferrer">
                 {p.cta.label}
                 <ArrowUpRightIcon size={16} />
               </a>
