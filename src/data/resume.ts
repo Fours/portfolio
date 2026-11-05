@@ -145,7 +145,8 @@ export type Project = {
   tech: string[]
   status?: string
   image?: string
-  cta: { label: string; href: string }
+  // Leave `href` off to show a disabled button (e.g. 'Demo Coming Soon').
+  cta: { label: string; href?: string }
 }
 
 export const projects: Project[] = [
@@ -170,6 +171,28 @@ export const projects: Project[] = [
     tech: ['Three.js', 'Typescript', 'WebGL', '3D game loop'],
     image: '/projects/archery-blitz.webp',
     cta: { label: 'Play the game', href: 'https://archery-blitz.kylewillett.com' },
+  },
+  {
+    title: 'Software Quizzes',
+    tagline: 'Interview prep, one question at a time',
+    description:
+      'Bite-sized quizzes for practicing senior engineering interview questions across TypeScript, React, Node.js, SQL, system design, security and more. Each answer is scored instantly with a detailed explanation, code samples are syntax-highlighted, and progress is saved in the browser.',
+    aiNote:
+      'Used AI as a content engine: I defined the topics, difficulty and format, then had an agent generate the questions and explanations that I study from and review.',
+    tech: ['React', 'TypeScript', 'Markdown', 'highlight.js'],
+    image: '/projects/software-quizzes.webp',
+    cta: { label: 'Demo Coming Soon' },
+  },
+  {
+    title: 'Ledger',
+    tagline: 'A full-stack personal finance and budgeting app',
+    description:
+      'Track spending, review transactions and stay on budget across a dashboard, transaction log and budget planner with pacing, rollovers and per-category limits. Backed by a REST API with JWT auth, a layered controller / handler / repository design over Prisma and Postgres, and unit tests with Jest.',
+    aiNote:
+      'Split on purpose: the React front-end was designed and built with AI assistance, while I wrote the Node API entirely by hand to sharpen my back-end fundamentals.',
+    tech: ['React', 'TypeScript', 'Node.js', 'Express', 'Prisma', 'PostgreSQL'],
+    image: '/projects/ledger.webp',
+    cta: { label: 'Demo Coming Soon' },
   },
 ]
 

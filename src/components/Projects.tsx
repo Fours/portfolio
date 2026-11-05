@@ -35,10 +35,17 @@ export default function Projects() {
       <div className="project-grid">
         {projects.map((p) => (
           <article key={p.title} className="project-card">
-            <a className="project-media" href={p.cta.href} target="_blank" rel="noopener noreferrer" tabIndex={-1} aria-hidden="true">
-              <Shot project={p} />
-              {p.status && <span className="project-status">{p.status}</span>}
-            </a>
+            {p.cta.href ? (
+              <a className="project-media" href={p.cta.href} target="_blank" rel="noopener noreferrer" tabIndex={-1} aria-hidden="true">
+                <Shot project={p} />
+                {p.status && <span className="project-status">{p.status}</span>}
+              </a>
+            ) : (
+              <div className="project-media">
+                <Shot project={p} />
+                {p.status && <span className="project-status">{p.status}</span>}
+              </div>
+            )}
             <div className="project-body">
               <div className="project-head">
                 <h3 className="project-title">{p.title}</h3>
@@ -54,10 +61,14 @@ export default function Projects() {
                   <span key={t} className="tag">{t}</span>
                 ))}
               </div>
-              <a className="btn btn-ghost project-cta" href={p.cta.href} target="_blank" rel="noopener noreferrer">
-                {p.cta.label}
-                <ArrowUpRightIcon size={16} />
-              </a>
+              {p.cta.href ? (
+                <a className="btn btn-ghost project-cta" href={p.cta.href} target="_blank" rel="noopener noreferrer">
+                  {p.cta.label}
+                  <ArrowUpRightIcon size={16} />
+                </a>
+              ) : (
+                <span className="btn btn-ghost project-cta is-disabled">{p.cta.label}</span>
+              )}
             </div>
           </article>
         ))}

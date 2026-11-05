@@ -876,6 +876,15 @@ p {
 .project-cta:hover svg {
   transform: translate(2px, -2px);
 }
+.project-cta.is-disabled {
+  border-style: dashed;
+  color: var(--text-dim);
+  cursor: default;
+}
+.project-cta.is-disabled:hover {
+  border-color: var(--line-3);
+  color: var(--text-dim);
+}
 
 /* ---------- Skills ---------- */
 .skill-grid {
