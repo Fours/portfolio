@@ -187,12 +187,12 @@ export const projects: Project[] = [
     title: 'quiz()',
     tagline: 'Interview prep, one question at a time',
     description:
-      'Bite-sized quizzes for practicing senior engineering interview questions across a variety of topics. Each answer is scored instantly with a detailed explanation, code samples are syntax-highlighted, and progress is saved in the browser.',
+      'Bite-sized quizzes for practicing software engineering interview questions across a variety of topics. Each answer is scored instantly with a detailed explanation, code samples are syntax-highlighted, and progress is saved in the browser.',
     aiNote:
       'Used AI as a content engine: I defined the topics, difficulty and format, then had an agent generate the questions and explanations that I study from and review.',
     tech: ['React', 'TypeScript', 'Markdown', 'highlight.js'],
     image: '/projects/software-quizzes.webp',
-    cta: { label: 'Site Coming Soon' },
+    cta: { label: 'Visit the Site', href: 'https://quiz.kylewillett.com' },
   },
   
 ]
