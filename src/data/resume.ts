@@ -168,7 +168,6 @@ export const projects: Project[] = [
     aiNote:
       'Shaped over 100+ prompts: plan-first sessions to scope each feature, then iterative agent loops to tune the physics, camera and game feel until they landed.',
     tech: ['Three.js', 'Typescript', 'WebGL', '3D game loop'],
-    status: 'Level 1 playable',
     image: '/projects/archery-blitz.webp',
     cta: { label: 'Play the game', href: 'https://archery-blitz.kylewillett.com' },
   },
