@@ -157,6 +157,7 @@ export const projects: Project[] = [
     aiNote:
       'Built AI-first: I set the product direction, designed the experience and reviewed every change while coding agents wrote most of the implementation.',
     tech: ['React', 'TypeScript', 'Canvas animation'],
+    image: '/projects/solar-system-explorer.webp',
     cta: { label: 'Explore the app', href: 'https://solar-system.kylewillett.com' },
   },
   {
@@ -168,6 +169,7 @@ export const projects: Project[] = [
       'Shaped over 100+ prompts: plan-first sessions to scope each feature, then iterative agent loops to tune the physics, camera and game feel until they landed.',
     tech: ['Three.js', 'Typescript', 'WebGL', '3D game loop'],
     status: 'Level 1 playable',
+    image: '/projects/archery-blitz.webp',
     cta: { label: 'Play the game', href: 'https://archery-blitz.kylewillett.com' },
   },
 ]
