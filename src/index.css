@@ -751,7 +751,6 @@ p {
   display: flex;
   flex-direction: column;
   border: 1px solid #1f2b45;
-  border-radius: 16px;
   background: var(--surface);
   overflow: hidden;
   transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
