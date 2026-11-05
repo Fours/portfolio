@@ -27,7 +27,7 @@ export default function Projects() {
         </SectionHeading>
         <p className="section-lede">
           Things I build for fun, and to push how far AI-assisted development can go. I plan the
-          work, steer the agents and review every change, turning ideas into working software in a
+          work, orchestrate the agents and review every change, turning ideas into working software in a
           fraction of the time.
         </p>
       </div>

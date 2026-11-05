@@ -857,7 +857,7 @@ p {
   line-height: 1.55;
   color: var(--text-soft);
   background: rgba(74, 222, 128, 0.06);
-  border: 1px solid rgba(74, 222, 128, 0.2);
+  border: 1px solid rgba(74, 222, 128, 0.5);
   border-radius: 10px;
   padding: 12px 14px;
 }
