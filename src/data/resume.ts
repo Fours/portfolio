@@ -165,7 +165,7 @@ export const projects: Project[] = [
     title: 'Archery Blitz',
     tagline: 'A fast, 3D archery game in the browser',
     description:
-      'Draw, aim and loose arrows across a 3D range rendered with Three.js. The core loop of aim, release, score and go again is tuned to feel good shot after shot. One level is playable today.',
+      'Draw, aim and loose arrows across a 3D range rendered with Three.js. The core loop of aim, release, score and go again is tuned to feel good shot after shot. One level is playable today - now with audio.',
     aiNote:
       'Shaped over 100+ prompts: plan-first sessions to scope each feature, then iterative agent loops to tune the physics, camera and game feel until they landed.',
     tech: ['Three.js', 'Typescript', 'WebGL', '3D game loop'],
