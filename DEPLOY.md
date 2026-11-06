@@ -15,10 +15,11 @@ The site is a static build (`dist/`) hosted on **S3 behind CloudFront**:
    ```bash
    aws configure
    ```
-   The credentials need: `s3:PutObject`, `s3:DeleteObject`, `s3:ListBucket` on the
-   bucket, and `cloudfront:CreateInvalidation` on the distribution. A ready-to-use
-   least-privilege policy is in [`deploy/iam-policy.json`](deploy/iam-policy.json) —
-   see [IAM permissions](#iam-permissions) below.
+   Use the shared deployer IAM user's credentials (one user deploys all sites in
+   the bucket). It needs `s3:PutObject`, `s3:DeleteObject` and `s3:ListBucket` on the
+   bucket, and `cloudfront:CreateInvalidation` on this site's distribution. The policy
+   is in [`deploy/iam-policy.json`](deploy/iam-policy.json). See
+   [IAM permissions](#iam-permissions) below.
 
 2. **Provide your CloudFront distribution ID.** Copy the example config and fill it in
    (the real file is gitignored, so the ID never gets committed):
@@ -60,31 +61,31 @@ The script reads these from the environment or `scripts/deploy.config.local`:
 
 ## IAM permissions
 
-Give the deploying identity only what the script needs — don't use your root
-account or an admin/`AmazonS3FullAccess` identity. For a human deploying from a
-laptop, **IAM Identity Center (SSO)** is preferred (short-lived credentials, no
-stored secret key). A dedicated IAM user with access keys also works if you scope
-it tightly and rotate the key periodically.
+All sites in the `kylewillett.com` bucket (portfolio, quiz, solar-system,
+archery-blitz, …) deploy with **one shared deployer IAM user**. Its policy is in
+[`deploy/iam-policy.json`](deploy/iam-policy.json) and grants exactly what the
+deploy scripts call:
 
-The least-privilege policy is in [`deploy/iam-policy.json`](deploy/iam-policy.json).
+- `s3:ListBucket` on `kylewillett.com` (so `s3 sync` can diff)
+- `s3:PutObject` / `s3:DeleteObject` on the **whole bucket** (`kylewillett.com/*`).
+  This is intentional, because the same user deploys every site's prefix.
+- `cloudfront:CreateInvalidation` on each site's distribution
+
 Before attaching it, replace the placeholders in the CloudFront statement:
 
-- `ACCOUNT_ID` — your 12-digit AWS account ID
-- `DIST_ID` — the CloudFront distribution ID (same one as `CLOUDFRONT_DISTRIBUTION_ID`)
+- `ACCOUNT_ID`: your 12-digit AWS account ID
+- `DIST_ID`: the CloudFront distribution ID (same one as `CLOUDFRONT_DISTRIBUTION_ID`)
 
-It grants exactly what `scripts/deploy.sh` calls:
-
-- `s3:ListBucket` on `kylewillett.com`, scoped to the `portfolio/*` prefix (so `s3 sync` can diff)
-- `s3:PutObject` / `s3:DeleteObject` under `portfolio/*`
-- `cloudfront:CreateInvalidation` on the one distribution
+**Adding a new site:** don't create a new user. Add the new distribution's ARN
+(`arn:aws:cloudfront::ACCOUNT_ID:distribution/<DIST_ID>`) to the `Resource` list of
+the deployer's `InvalidateCloudFront` statement. If you skip this, the S3 sync
+succeeds but the invalidation fails with AccessDenied.
 
 If `s3 sync` ever reports a permission error, add `s3:GetObject` on
-`arn:aws:s3:::kylewillett.com/portfolio/*` — some sync comparisons use it.
+`arn:aws:s3:::kylewillett.com/*`. Some sync comparisons use it.
 
-**Tip:** attach it to a named profile rather than your shell default, e.g.
-`aws configure --profile portfolio-deploy`, then deploy with
-`AWS_PROFILE=portfolio-deploy npm run deploy`, so this limited identity isn't your
-default credentials.
+Still don't deploy with your root account or an admin identity. Keep the deployer
+scoped to this bucket and these distributions, and rotate its access key periodically.
 
 ## Notes
 
