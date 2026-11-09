@@ -150,7 +150,28 @@ export type Project = {
 }
 
 export const projects: Project[] = [
-    {
+  {
+    title: 'Rate Limiter',
+    tagline: 'Open-source, distributed rate limiting for Express',
+    description:
+      'An npm package with five pluggable algorithms (token bucket, leaky bucket, fixed window, sliding window log and sliding window counter), chosen per rule. Limits are shared across instances through Redis with atomic Lua scripts, and an in-memory fallback answers if Redis fails. Load-tested on a three-instance stack at ~40k req/s, with a Prometheus adapter and Grafana dashboard.',
+    aiNote:
+      'Spec-driven: five milestones and 36 decision records set the bar, agents built to them, and the tests proved it: mutation testing (98% of mutants caught), property tests, benchmarks and chaos runs with zero failed requests while Redis was killed under load.',
+    tech: ['TypeScript', 'Node.js', 'Express', 'Redis', 'Lua', 'Vitest', 'k6', 'Docker'],
+    cta: { label: 'Visualizer coming soon' },
+  },
+  {
+    title: 'The Tabernacle',
+    tagline: 'A walkable 3D reconstruction of the ancient Tabernacle at night',
+    description:
+      'Walk the courtyard and into the tent in first person, lit by firelight: raymarched flames, linen that glows and stirs in the wind, a gold-lit interior and a camp of thousands of tents under the stars. Over 20k lines of code tuned to balance visual fidelity against frame time, with a lighter quality tier, touch controls and forced landscape for phones.',
+    aiNote:
+      'Built in a plan-and-implement loop: each chunk of work became a written plan of steps that sub-agents implemented and independently checked, with draw calls and frame times measured against a budget at every step.',
+    tech: ['Three.js', 'JavaScript', 'WebGL', 'GLSL', 'Web Audio', 'Mobile'],
+    image: '/projects/tabernacle.webp',
+    cta: { label: 'Explore the scene', href: 'https://tabernacle.kylewillett.com' },
+  },
+  {
     title: 'Ledger',
     tagline: 'A full-stack personal finance and budgeting app',
     description:
@@ -159,7 +180,7 @@ export const projects: Project[] = [
       'Split on purpose: the React front-end was designed and built with AI assistance, while I wrote the Node API entirely by hand to sharpen my back-end fundamentals.',
     tech: ['React', 'TypeScript', 'Node.js', 'Express', 'Prisma', 'PostgreSQL', 'Jest'],
     image: '/projects/ledger.webp',
-    cta: { label: 'Demo Coming Soon' },
+    cta: { label: 'Demo coming soon' },
   },
   {
     title: 'Archery Blitz',
@@ -192,7 +213,7 @@ export const projects: Project[] = [
       'Used AI as a content engine: I defined the topics, difficulty and format, then had an agent generate the questions and explanations that I study from and review.',
     tech: ['React', 'TypeScript', 'Markdown', 'highlight.js'],
     image: '/projects/software-quizzes.webp',
-    cta: { label: 'Visit the Site', href: 'https://quiz.kylewillett.com' },
+    cta: { label: 'Visit the site', href: 'https://quiz.kylewillett.com' },
   },
   
 ]
