@@ -158,7 +158,7 @@ export const projects: Project[] = [
     aiNote:
       'Spec-driven: five milestones and 36 decision records set the bar, agents built to them, and the tests proved it: mutation testing (98% of mutants caught), property tests, benchmarks and chaos runs with zero failed requests while Redis was killed under load.',
     tech: ['TypeScript', 'Node.js', 'Express', 'Redis', 'Lua', 'Vitest', 'k6', 'Docker'],
-    cta: { label: 'Visualizer coming soon' },
+    cta: { label: 'Try the demo', href: 'https://rate-limiter.kylewillett.com' },
   },
   {
     title: 'The Tabernacle',
