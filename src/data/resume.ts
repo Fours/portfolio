@@ -4,6 +4,9 @@ import type { TechIconName } from '../components/Icons'
 
 export const email = 'kylewillett@gmail.com'
 
+// PDF resume, served from public/. Keep it in sync with the content below.
+export const resumeHref = '/Resume_Kyle_Willett.pdf'
+
 export type Social = { kind: 'x' | 'github' | 'youtube'; label: string; href: string }
 
 export const socials: Social[] = [

@@ -1,4 +1,16 @@
+import type { PostHog } from 'posthog-js'
+
 const posthogKey = import.meta.env.VITE_PUBLIC_POSTHOG_KEY
+
+let client: PostHog | undefined
+// Events tracked before posthog-js has loaded; sent once it initializes.
+const pending: [string, Record<string, unknown> | undefined][] = []
+
+export function track(event: string, properties?: Record<string, unknown>) {
+  if (!posthogKey) return
+  if (client) client.capture(event, properties)
+  else pending.push([event, properties])
+}
 
 // Loads posthog-js as a separate async chunk (kept out of the critical bundle)
 // and initializes it on the next idle frame. The automatic pageview fires at
@@ -14,6 +26,8 @@ export function initAnalytics() {
         defaults: '2025-05-24',
         capture_pageview: true,
       })
+      client = posthog
+      for (const [event, properties] of pending.splice(0)) posthog.capture(event, properties)
     })
 
   if (typeof window.requestIdleCallback === 'function') {

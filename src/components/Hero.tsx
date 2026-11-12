@@ -3,6 +3,7 @@ import { email } from '../data/resume'
 import { ArrowDownIcon, MailIcon } from './Icons'
 import SocialLinks from './SocialLinks'
 import NeuralNet from './NeuralNet'
+import ResumeLink from './ResumeLink'
 
 export default function Hero() {
   const copyRef = useRef<HTMLDivElement>(null)
@@ -25,6 +26,7 @@ export default function Hero() {
               <MailIcon />
               Get in touch
             </a>
+            <ResumeLink placement="hero" className="btn btn-ghost" />
             <SocialLinks />
             <a href="#experience" className="btn btn-ghost hero-view-exp">
               View experience

@@ -1,6 +1,7 @@
 import { email } from '../data/resume'
 import { MailIcon } from './Icons'
 import SocialLinks from './SocialLinks'
+import ResumeLink from './ResumeLink'
 
 export default function Contact() {
   return (
@@ -15,6 +16,7 @@ export default function Contact() {
             <MailIcon size={20} />
             Email
           </a>
+          <ResumeLink placement="contact" className="btn btn-ghost btn-lg" iconSize={20} />
           <SocialLinks />
         </div>
       </div>

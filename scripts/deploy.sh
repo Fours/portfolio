@@ -44,16 +44,26 @@ echo "==> Building (npm run build)..."
 npm run build
 
 # ---- Upload ----------------------------------------------------------------
-# 1) Everything except index.html: content-hashed filenames, cache forever.
+# 1) Everything except index.html and PDFs: content-hashed filenames, cache forever.
 #    --delete removes stale objects (old bundles) under the prefix.
 echo "==> Syncing assets to ${DEST}/ (immutable, 1y cache)..."
 aws s3 sync dist/ "${DEST}/" \
   --region "$REGION" \
   --delete \
   --exclude "index.html" \
+  --exclude "*.pdf" \
   --cache-control "public, max-age=31536000, immutable"
 
-# 2) index.html: no caching, so a new deploy is picked up immediately.
+# 2) PDFs (the resume) keep a fixed filename but get updated, so browsers must
+#    revalidate instead of holding a stale copy for a year.
+echo "==> Syncing PDFs (no-cache)..."
+aws s3 sync dist/ "${DEST}/" \
+  --region "$REGION" \
+  --exclude "*" \
+  --include "*.pdf" \
+  --cache-control "no-cache"
+
+# 3) index.html: no caching, so a new deploy is picked up immediately.
 echo "==> Uploading index.html (no-cache)..."
 aws s3 cp dist/index.html "${DEST}/index.html" \
   --region "$REGION" \
