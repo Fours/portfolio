@@ -154,6 +154,28 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    title: 'AI Agent: Log Triage',
+    tagline: 'An LLM agent that finds the root cause in production logs, and proves it',
+    description:
+      'Given an alert, it investigates: searching logs, pulling context and following traces across services through deterministic tools, then returns ranked root causes with cited log lines and a calibrated confidence. Scored by an eval harness over 96 code-generated incidents with planted red herrings, for accuracy, evidence precision and recall, calibration and cost.',
+    aiNote:
+      'The eval is the point: versioned prompts, tuned on a dev set and checked once on a held-out set, raised evidence precision from 63% to ~90%. A model matrix with bootstrap intervals showed Haiku 5.5 matching Opus on accuracy and evidence at 1/15 cost.',
+    tech: ['TypeScript', 'Anthropic SDK', 'Agentic tool use', 'Evals', 'Zod'],
+    image: '/projects/log-triage.webp',
+    cta: { label: 'Learn more', href: 'https://log-triage.kylewillett.com' },
+  },
+  {
+    title: 'Drift: Ambient Music App',
+    tagline: "A generative canvas for ambient music that's always in tune",
+    description:
+      'Place drones, chimes, pulses, orbits and textures on an open sky, and they play off each other as slow, evolving music. Notes snap to the chosen scale, and the simulation runs on the audio clock so timing stays exact. Six starting scenes, tape wow and flutter, WAV recording, and every sample synthesized in code.',
+    aiNote:
+      'I directed, agents built: I shaped the concept, the look and the mix by ear, and reviewed every change while coding agents wrote most of the code.',
+    tech: ['React', 'TypeScript', 'Tone.js', 'Web Audio', 'Canvas 2D'],
+    image: '/projects/drift.webp',
+    cta: { label: 'Coming soon' },
+  },
+  {
     title: 'Rate Limiter',
     tagline: 'Open-source, distributed rate limiting for Express',
     description:
