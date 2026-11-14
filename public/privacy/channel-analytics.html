@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Privacy policy for channel-analytics, a command-line tool that reads YouTube Analytics for Kyle Willett's own channels." />
+    <meta name="theme-color" content="#0b1220" />
+    <meta name="robots" content="noindex" />
+    <title>Privacy policy: channel-analytics · Kyle Willett</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+    <!-- A standalone page served from public/, outside the React app, so its styles are here
+         rather than in src/index.css. Colors are the site's tokens. -->
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0b1220;
+        --line: #1c2740;
+        --accent: #4ade80;
+        --text-strong: #f4f7fc;
+        --text-body: #b4bfd3;
+        --text-muted: #9aa7bf;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text-body);
+        font: 400 17px/1.65 Inter, system-ui, -apple-system, sans-serif;
+      }
+      main { max-width: 680px; margin: 0 auto; padding: 72px 24px 96px; }
+      .back { color: var(--text-muted); font-size: 15px; text-decoration: none; }
+      .back:hover { color: var(--accent); }
+      h1 { color: var(--text-strong); font-size: 34px; line-height: 1.2; font-weight: 700; margin: 28px 0 8px; letter-spacing: -0.01em; }
+      .updated { color: var(--text-muted); font-size: 15px; margin: 0 0 40px; }
+      h2 { color: var(--text-strong); font-size: 20px; font-weight: 600; margin: 40px 0 8px; padding-top: 24px; border-top: 1px solid var(--line); }
+      a { color: var(--accent); }
+      ul { padding-left: 1.2em; }
+      li { margin: 6px 0; }
+      code { font-size: 0.92em; color: var(--text-strong); }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="back" href="/">← kylewillett.com</a>
+      <h1>Privacy policy: channel-analytics</h1>
+      <p class="updated">Last updated November 14, 2026</p>
+
+      <p>
+        channel-analytics is a command-line tool I wrote for my own YouTube channels. It runs on my
+        computer, reads each video's analytics through Google's YouTube APIs, and writes the
+        numbers into review notes in my own files. It isn't offered to anyone else, and only
+        channels I own or manage are connected to it.
+      </p>
+
+      <h2>What it accesses</h2>
+      <p>With the permission granted on Google's consent screen, read-only:</p>
+      <ul>
+        <li><strong>YouTube Data API</strong> (<code>youtube.readonly</code>): the connected channel's name and ID, and each video's title, publish time and privacy status.</li>
+        <li><strong>YouTube Analytics and Reporting APIs</strong> (<code>yt-analytics.readonly</code>): views, watch time, average view duration, subscribers gained, thumbnail impressions and click-through rate for the channel's videos.</li>
+        <li><strong>Monetary analytics</strong> (<code>yt-analytics-monetary.readonly</code>): estimated revenue, for the channel's videos.</li>
+      </ul>
+      <p>It can't upload, edit or delete anything, and it doesn't read comments, messages or anyone else's account.</p>
+
+      <h2>Where the data goes</h2>
+      <ul>
+        <li>Everything stays on my computer: the OAuth tokens, the downloaded reports, and the numbers written into my notes.</li>
+        <li>There is no server or database, and no data is sent anywhere except Google's own APIs, to make the requests above.</li>
+        <li>Nothing is sold, shared, or used for advertising, and no data is used to train AI models.</li>
+      </ul>
+
+      <h2>Keeping and deleting it</h2>
+      <p>
+        Tokens and downloaded reports are kept until I delete them or revoke access. Access can be
+        revoked at any time from the Google account's
+        <a href="https://myaccount.google.com/permissions">third-party connections</a> page,
+        after which the tool can't read anything more.
+      </p>
+
+      <h2>Google API Services</h2>
+      <p>
+        channel-analytics' use of information received from Google APIs adheres to the
+        <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>,
+        including the Limited Use requirements. Use of YouTube data is also subject to the
+        <a href="https://www.youtube.com/t/terms">YouTube Terms of Service</a> and
+        <a href="https://policies.google.com/privacy">Google's Privacy Policy</a>.
+      </p>
+
+      <h2>Contact</h2>
+      <p>Questions about this policy: <a href="mailto:kylewillett@gmail.com">kylewillett@gmail.com</a>.</p>
+    </main>
+  </body>
+</html>

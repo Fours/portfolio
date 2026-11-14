@@ -44,8 +44,9 @@ That runs [`scripts/deploy.sh`](scripts/deploy.sh), which:
 2. **Syncs assets** to `s3://kylewillett.com/portfolio/` with a 1-year immutable
    cache. Filenames are content-hashed, so they can be cached forever; `--delete`
    prunes old bundles.
-3. **Uploads `index.html`** with `Cache-Control: no-cache` so new deploys are
-   picked up immediately (it's the one file whose name never changes).
+3. **Uploads the HTML pages** (`index.html`, plus static pages from `public/` such as
+   `privacy/channel-analytics.html`) with `Cache-Control: no-cache` so new deploys
+   are picked up immediately (their names never change).
 4. **Invalidates CloudFront** (`/*`) so edge caches serve the new `index.html`.
 
 ## Config overrides
@@ -93,5 +94,5 @@ scoped to this bucket and these distributions, and rotate its access key periodi
   instead of a subdomain root), set `base: '/portfolio/'` in `vite.config.ts` and
   rebuild — otherwise the hashed assets will 404.
 - The CloudFront invalidation uses `/*`. If you want to minimize invalidation cost,
-  you can narrow it to `/index.html` since the hashed assets are immutable and never
+  you can narrow it to `/index.html` and `/privacy/*` since the hashed assets are immutable and never
   need invalidating.
